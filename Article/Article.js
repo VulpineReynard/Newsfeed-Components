@@ -132,11 +132,14 @@ function createArticle(title, date, p1, p2, p3) {
   const paragraph2 = document.createElement('p');
   const paragraph3 = document.createElement('p');
   const expandButton = document.createElement('span');
+  const closeArticleButton = document.createElement('button');
 
   article.appendChild(articleTitle);
+  article.appendChild(closeArticleButton);
   article.appendChild(dateText);
   article.appendChild(paragraph1, paragraph2, paragraph3);
   article.appendChild(expandButton);
+  article.style.maxHeight = '50px';
 
   article.classList.add('article');
   dateText.classList.add('date');
@@ -147,10 +150,92 @@ function createArticle(title, date, p1, p2, p3) {
   paragraph1.textContent = p1;
   paragraph2.textContent = p2;
   paragraph3.textContent = p3;
-  expandButton.textContent = "Expand";
+  expandButton.textContent = "Click To Expand";
+  closeArticleButton.textContent = "Close Article";
 
   expandButton.addEventListener('click', event => {
-    article.classList.toggle('article-open');
+
+    if(article.style.maxHeight === '50px'){
+      expandButton.textContent = 'Click to Close';
+      article.classList.toggle('article-open');
+      TweenMax.to(article, .5, { maxHeight: '300px' });
+    } 
+    if (article.style.maxHeight === '300px'){
+      expandButton.textContent = 'Click to Expand';
+      TweenMax.to(article, .5, { maxHeight: '50px' });
+      setTimeout(() => {
+        article.classList.toggle('article-open');
+      }, 500);
+    }
+  });
+
+  closeArticleButton.addEventListener('click', event => {
+    TweenMax.to(article, .5, { opacity: '0' });
+    setTimeout(() => {
+      article.style.display = 'none';
+    }, 500);
+  });
+
+  return article;
+}
+const menuButton = document.querySelector('.menu-button');
+let index = 0;
+menuButton.addEventListener('click', () => {
+  articleAccordion.appendChild(createNewArticle(data[index].title, data[index].date, data[index].firstParagraph, data[index].secondParagraph, data[index].thirdParagraph));
+  index++;
+  if(index === 5){ index = 0; }
+});
+
+function createNewArticle(title, date, p1, p2, p3) {
+  const article = document.createElement('div');
+  const articleTitle = document.createElement('h2');
+  const dateText = document.createElement('p');
+  const paragraph1 = document.createElement('p');
+  const paragraph2 = document.createElement('p');
+  const paragraph3 = document.createElement('p');
+  const expandButton = document.createElement('span');
+  const closeArticleButton = document.createElement('button');
+
+  article.appendChild(articleTitle);
+  article.appendChild(closeArticleButton);
+  article.appendChild(dateText);
+  article.appendChild(paragraph1, paragraph2, paragraph3);
+  article.appendChild(expandButton);
+  article.style.maxHeight = '50px';
+
+  article.classList.add('article');
+  dateText.classList.add('date');
+  expandButton.classList.add('expandButton');
+
+  articleTitle.textContent = title;
+  dateText.textContent = date;
+  paragraph1.textContent = p1;
+  paragraph2.textContent = p2;
+  paragraph3.textContent = p3;
+  expandButton.textContent = "Click To Expand";
+  closeArticleButton.textContent = "Close Article";
+
+  expandButton.addEventListener('click', event => {
+
+    if(article.style.maxHeight === '50px'){
+      expandButton.textContent = 'Click to Close';
+      article.classList.toggle('article-open');
+      TweenMax.to(article, .5, { maxHeight: '300px' });
+    } 
+    if (article.style.maxHeight === '300px'){
+      expandButton.textContent = 'Click to Expand';
+      TweenMax.to(article, .5, { maxHeight: '50px' });
+      setTimeout(() => {
+        article.classList.toggle('article-open');
+      }, 500);
+    }
+  });
+
+  closeArticleButton.addEventListener('click', event => {
+    TweenMax.to(article, .5, { opacity: '0' });
+    setTimeout(() => {
+      article.style.display = 'none';
+    }, 500);
   });
 
   return article;

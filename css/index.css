@@ -45,7 +45,7 @@
   border-radius: 10px;
   background-color: white;
   position: relative;
-  height: 50px;
+  max-height: 50px;
   overflow: hidden;
   box-shadow: 2px 2px 2px lightgrey;
 }
@@ -53,6 +53,23 @@
   font-size: 28px;
   padding: 0;
   margin: 15px 0 0;
+  width: 80%;
+}
+.article button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 3px;
+  border-radius: 5px;
+  outline: none;
+  background-color: #009e00;
+  border: 2px #66e966;
+  color: white;
+  box-shadow: 2px 2px 3px 1px grey;
+  cursor: pointer;
+}
+.article button:active {
+  background: #00c700;
 }
 .article .date {
   margin: 0;
