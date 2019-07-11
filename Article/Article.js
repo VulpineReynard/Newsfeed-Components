@@ -1,5 +1,3 @@
-/* This is the data we will be using to create our article components */
-/* Look over this data, then proceed to line 91*/
 const data = [
   {
     title: 'Lambda School Students: "We\'re the best!"',
@@ -85,8 +83,32 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'Professional Software Development in 2020',
+    date: 'Jan 2nd, 2020',
+    firstParagraph: `Hodor hodor HODOR! Hodor hodor - hodor, hodor. Hodor hodor... Hodor hodor hodor; hodor hodor. Hodor hodor hodor, hodor, hodor
+          hodor. Hodor, hodor. Hodor. Hodor, hodor - hodor... Hodor hodor hodor; hodor HODOR hodor, hodor hodor?! Hodor hodor, hodor.
+          Hodor hodor hodor hodor hodor! Hodor hodor - HODOR hodor, hodor hodor hodor hodor hodor; hodor hodor? `,
+
+    secondParagraph: `Hodor, hodor. Hodor. Hodor, hodor, hodor. Hodor hodor, hodor. Hodor hodor, hodor, hodor hodor. Hodor! Hodor hodor, hodor;
+          hodor hodor hodor? Hodor, hodor. Hodor. Hodor, hodor - HODOR hodor, hodor hodor hodor! Hodor, hodor. Hodor. Hodor, HODOR
+          hodor, hodor hodor, hodor, hodor hodor. Hodor hodor - hodor - hodor... Hodor hodor hodor hodor hodor hodor hodor?! Hodor
+          hodor - hodor hodor hodor. Hodor. Hodor hodor... Hodor hodor hodor hodor hodor? `,
+
+    thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
+          Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
+          Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
   }
 ];
+
+let body = document.querySelector('body');
+const newArticleButton = document.createElement('button');
+newArticleButton.classList.add('new-article-btn');
+newArticleButton.textContent = 'Create New Article';
+body.appendChild(newArticleButton);
+
+const createArticleButton = document.querySelector('.create-article-btn');
 
 /* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
   
@@ -100,15 +122,163 @@ const data = [
   </div>
 
   Hint: You will need to use createElement more than once here!
-
-  Your function should take either an object as it's one argument, or 5 separate arguments mapping to each peice of the data object above.
-
-  Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
-
-  Step 3: return the entire component.
-
-  Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
-
-  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new artible
-
 */
+// Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
+let articleAccordion = document.querySelector('.articles');
+data.forEach(article => {
+  // console.log('creating ', article.title, article.date, article.firstParagraph, article.secondParagraph, article.thirdParagraph);
+  articleAccordion.appendChild(createArticle(article.title, article.date, article.firstParagraph, article.secondParagraph, article.thirdParagraph));
+});
+
+function createArticle(title, date, p1, p2, p3) {
+  // Create elements
+  const article = document.createElement('div');
+  const articleTitle = document.createElement('h2');
+  const dateText = document.createElement('p');
+  const paragraph1 = document.createElement('p');
+  const paragraph2 = document.createElement('p');
+  const paragraph3 = document.createElement('p');
+  const expandButton = document.createElement('span');
+  const closeArticleButton = document.createElement('button');
+
+  article.appendChild(articleTitle);
+  article.appendChild(closeArticleButton);
+  article.appendChild(dateText);
+  article.appendChild(paragraph1);
+  article.appendChild(paragraph2);
+  article.appendChild(paragraph3);
+  article.appendChild(expandButton);
+  article.style.maxHeight = '50px';
+
+  article.classList.add('article');
+  dateText.classList.add('date');
+  expandButton.classList.add('expandButton');
+
+  articleTitle.textContent = title;
+  dateText.textContent = date;
+  paragraph1.textContent = p1;
+  paragraph2.textContent = p2;
+  paragraph3.textContent = p3;
+  expandButton.textContent = "Click To Expand";
+  closeArticleButton.textContent = "Close Article";
+
+  // Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
+  expandButton.addEventListener('click', event => {
+
+    if(article.style.maxHeight === '50px'){ // close article
+      expandButton.textContent = 'Click to Close';
+      article.classList.toggle('article-open');
+      TweenMax.to(article, .5, { maxHeight: '500px' });
+    } 
+    if (article.style.maxHeight === '500px'){ // open article
+      expandButton.textContent = 'Click to Expand';
+      TweenMax.to(article, .5, { maxHeight: '50px' });
+      setTimeout(() => {
+        article.classList.toggle('article-open');
+      }, 500);
+    }
+  });
+
+  // close the entire article, removing it
+  closeArticleButton.addEventListener('click', event => {
+    TweenMax.to(article, .5, { opacity: '0' });
+    setTimeout(() => {
+      article.style.display = 'none';
+    }, 500);
+  });
+
+  return article;
+}
+let index = 0;
+createArticleButton.addEventListener('click', () => { // creates a randomly generated article from the data given, will update to accept user input
+  let titleValue = document.querySelector('.article-title').value;
+  let dateValue = document.querySelector('.article-date').value;
+  let p1Value = document.querySelector('.paragraph-1').value;
+  let p2Value = document.querySelector('.paragraph-2').value;
+  let p3Value = document.querySelector('.paragraph-3').value;
+
+  articleAccordion.appendChild(createNewArticle(titleValue, dateValue, p1Value, p2Value, p3Value));
+});
+
+// Function to create a whole new article for our
+function createNewArticle(title, date, p1, p2, p3) {
+  const article = document.createElement('div');
+  const articleTitle = document.createElement('h2');
+  const dateText = document.createElement('p');
+  const paragraph1 = document.createElement('p');
+  const paragraph2 = document.createElement('p');
+  const paragraph3 = document.createElement('p');
+  const expandButton = document.createElement('span');
+  const closeArticleButton = document.createElement('button');
+
+  article.appendChild(articleTitle);
+  article.appendChild(closeArticleButton);
+  article.appendChild(dateText);
+  article.appendChild(paragraph1);
+  article.appendChild(paragraph2);
+  article.appendChild(paragraph3);
+  article.appendChild(expandButton);
+  article.style.maxHeight = '50px';
+
+  article.classList.add('article');
+  dateText.classList.add('date');
+  expandButton.classList.add('expandButton');
+
+  articleTitle.textContent = title;
+  dateText.textContent = date;
+  paragraph1.textContent = p1;
+  paragraph2.textContent = p2;
+  paragraph3.textContent = p3;
+  expandButton.textContent = "Click To Expand";
+  closeArticleButton.textContent = "Close Article";
+
+  expandButton.addEventListener('click', event => {
+
+    if(article.style.maxHeight === '50px'){
+      expandButton.textContent = 'Click to Close';
+      article.classList.toggle('article-open');
+      TweenMax.to(article, .5, { maxHeight: '500px' });
+    } 
+    if (article.style.maxHeight === '500px'){
+      expandButton.textContent = 'Click to Expand';
+      TweenMax.to(article, .5, { maxHeight: '50px' });
+      setTimeout(() => {
+        article.classList.toggle('article-open');
+      }, 500);
+    }
+  });
+
+  closeArticleButton.addEventListener('click', event => {
+    TweenMax.to(article, .5, { opacity: '0' });
+    setTimeout(() => {
+      article.style.display = 'none';
+    }, 500);
+  });
+
+  // Step 3: return the entire component.
+  return article;
+}
+
+// MODAL
+// Get the modal
+var modal = document.querySelector('#myModal');
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+newArticleButton.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
