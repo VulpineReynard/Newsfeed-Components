@@ -1,5 +1,3 @@
-/* This is the data we will be using to create our article components */
-/* Look over this data, then proceed to line 91*/
 const data = [
   {
     title: 'Lambda School Students: "We\'re the best!"',
@@ -110,6 +108,8 @@ newArticleButton.classList.add('new-article-btn');
 newArticleButton.textContent = 'Create New Article';
 body.appendChild(newArticleButton);
 
+const createArticleButton = document.querySelector('.create-article-btn');
+
 /* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
   
   <div class="article">
@@ -144,7 +144,9 @@ function createArticle(title, date, p1, p2, p3) {
   article.appendChild(articleTitle);
   article.appendChild(closeArticleButton);
   article.appendChild(dateText);
-  article.appendChild(paragraph1, paragraph2, paragraph3);
+  article.appendChild(paragraph1);
+  article.appendChild(paragraph2);
+  article.appendChild(paragraph3);
   article.appendChild(expandButton);
   article.style.maxHeight = '50px';
 
@@ -163,12 +165,12 @@ function createArticle(title, date, p1, p2, p3) {
   // Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
   expandButton.addEventListener('click', event => {
 
-    if(article.style.maxHeight === '50px'){
+    if(article.style.maxHeight === '50px'){ // close article
       expandButton.textContent = 'Click to Close';
       article.classList.toggle('article-open');
-      TweenMax.to(article, .5, { maxHeight: '300px' });
+      TweenMax.to(article, .5, { maxHeight: '500px' });
     } 
-    if (article.style.maxHeight === '300px'){
+    if (article.style.maxHeight === '500px'){ // open article
       expandButton.textContent = 'Click to Expand';
       TweenMax.to(article, .5, { maxHeight: '50px' });
       setTimeout(() => {
@@ -177,6 +179,7 @@ function createArticle(title, date, p1, p2, p3) {
     }
   });
 
+  // close the entire article, removing it
   closeArticleButton.addEventListener('click', event => {
     TweenMax.to(article, .5, { opacity: '0' });
     setTimeout(() => {
@@ -186,14 +189,18 @@ function createArticle(title, date, p1, p2, p3) {
 
   return article;
 }
-const menuButton = document.querySelector('.menu-button');
 let index = 0;
-newArticleButton.addEventListener('click', () => {
-  articleAccordion.appendChild(createNewArticle(data[index].title, data[index].date, data[index].firstParagraph, data[index].secondParagraph, data[index].thirdParagraph));
-  index++;
-  if(index === 5){ index = 0; }
+createArticleButton.addEventListener('click', () => { // creates a randomly generated article from the data given, will update to accept user input
+  let titleValue = document.querySelector('.article-title').value;
+  let dateValue = document.querySelector('.article-date').value;
+  let p1Value = document.querySelector('.paragraph-1').value;
+  let p2Value = document.querySelector('.paragraph-2').value;
+  let p3Value = document.querySelector('.paragraph-3').value;
+
+  articleAccordion.appendChild(createNewArticle(titleValue, dateValue, p1Value, p2Value, p3Value));
 });
 
+// Function to create a whole new article for our
 function createNewArticle(title, date, p1, p2, p3) {
   const article = document.createElement('div');
   const articleTitle = document.createElement('h2');
@@ -207,7 +214,9 @@ function createNewArticle(title, date, p1, p2, p3) {
   article.appendChild(articleTitle);
   article.appendChild(closeArticleButton);
   article.appendChild(dateText);
-  article.appendChild(paragraph1, paragraph2, paragraph3);
+  article.appendChild(paragraph1);
+  article.appendChild(paragraph2);
+  article.appendChild(paragraph3);
   article.appendChild(expandButton);
   article.style.maxHeight = '50px';
 
@@ -228,9 +237,9 @@ function createNewArticle(title, date, p1, p2, p3) {
     if(article.style.maxHeight === '50px'){
       expandButton.textContent = 'Click to Close';
       article.classList.toggle('article-open');
-      TweenMax.to(article, .5, { maxHeight: '300px' });
+      TweenMax.to(article, .5, { maxHeight: '500px' });
     } 
-    if (article.style.maxHeight === '300px'){
+    if (article.style.maxHeight === '500px'){
       expandButton.textContent = 'Click to Expand';
       TweenMax.to(article, .5, { maxHeight: '50px' });
       setTimeout(() => {
@@ -249,16 +258,27 @@ function createNewArticle(title, date, p1, p2, p3) {
   // Step 3: return the entire component.
   return article;
 }
-/*
 
-  Your function should take either an object as it's one argument, or 5 separate arguments mapping to each peice of the data object above.
+// MODAL
+// Get the modal
+var modal = document.querySelector('#myModal');
 
-  
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
 
-  
+// When the user clicks the button, open the modal 
+newArticleButton.onclick = function() {
+  modal.style.display = "block";
+}
 
-  
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
 
-  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article
-
-*/
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}

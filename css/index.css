@@ -93,6 +93,26 @@
 .article-open {
   height: auto;
 }
+.new-article-btn {
+  margin: 0 46%;
+  transition: all 0.2s;
+  width: 100px;
+  padding: 5px;
+  border-radius: 5px;
+  outline: none;
+  background-color: #009e00;
+  border: 2px #66e966;
+  color: white;
+  box-shadow: 2px 2px 3px 1px grey;
+  cursor: pointer;
+}
+.new-article-btn:active {
+  background: #00c700;
+}
+.new-article-btn:hover {
+  transform: scale(1.05);
+  background: #00c700;
+}
 .menu-button {
   position: absolute;
   left: 20px;
@@ -122,30 +142,59 @@
 .menu--open {
   display: block;
 }
+/* The Modal (background) */
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: #000000;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+.modal-content .paragraph {
+  margin: 10px auto;
+  width: 80%;
+  height: 200px;
+}
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 html,
 body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto';
   background-color: #fffef7;
-}
-.new-article-btn {
-  margin: 0 46%;
-  transition: all 0.2s;
-  width: 100px;
-  padding: 5px;
-  border-radius: 5px;
-  outline: none;
-  background-color: #009e00;
-  border: 2px #66e966;
-  color: white;
-  box-shadow: 2px 2px 3px 1px grey;
-  cursor: pointer;
-}
-.new-article-btn:active {
-  background: #00c700;
-}
-.new-article-btn:hover {
-  transform: scale(1.05);
-  background: #00c700;
 }

@@ -63,7 +63,24 @@
 .article-open {
   height: auto;
 }
+.new-article-btn {
+  margin: 0 46%;
+  transition: all .2s;
+  width: 100px;
+  padding: 5px;
+  border-radius: 5px;
+  outline: none;
+  background-color: rgb(0, 158, 0);
+  border: 2px rgb(102, 233, 102);
+  color: white;
+  box-shadow: 2px 2px 3px 1px grey;
+  cursor: pointer;
 
-
-
-
+  &:active {
+    background: rgb(0, 199, 0);
+  }
+  &:hover {
+    transform: scale(1.05);
+    background: rgb(0, 199, 0);
+  }
+}
